@@ -41,9 +41,13 @@ $(function() {
             });  
         });
     }
+
+    $(".to-comment").click(function(){
+        $("html,body").animate({'scrollTop':$(".have-word-say").offset().top},300);
+    });
 //评论
 //发布按钮
- $(".publish-btn").click(function() {
+/* $(".publish-btn").click(function() {
         var txt = $(".comment-text").val();
         if ($.trim($(".comment-text").val()) == "") {
             alert("评论不能为空");
@@ -126,10 +130,10 @@ $(function() {
         loadComment(++page);
         $(this).attr("data-page", page);
     });
-
+*/
 
     //回复
-    $(".comment").on('click', '.reply-ico', function() {
+    $(".comment").on('click', '.reply', function() {
         var id = $(this).data("id");
         if ($(this).closest(".comment-level1").next("#reply-form").length) {
             $("#reply-form").remove();
@@ -137,21 +141,19 @@ $(function() {
         }
         $("#reply-form").remove();
         var html = '<form class="clearfix" id="reply-form">\
-                            <label class="fl"><img src="' + common.randomAvator() + '"></label>\
+                            <span class="arrow-t"></span>\
+                            <label class="fl"><img src="images/avator.png"></label>\
                             <textarea class="replytxt fr" placeholder="我想说两句..."></textarea>\
-                            <input type="button" id="publish-btn" class="fr" data-id="' + id + '" value="发表">\
+                            <input type="button" id="reply-btn" class="fr" data-id="' + id + '" value="发表">\
                         </form>';
         $(html).insertAfter($(this).closest(".comment-level1")).hide().slideDown();
-
-
-
-
     });
+    
 
-    $(".comment").on('click', '#publish-btn', function() {
+    $(".comment").on('click', '#reply-btn', function() {
         $.post('/index.php?m=reward&c=ajax&a=postComment', { content: $(".replytxt").val(), id: $(this).data("id") }, function(data) {
             if (data.code == -10) {
-                common.showPopup(".login-popup",common.showlogin());
+                // common.showPopup(".login-popup",common.showlogin());
             } else {
                 if(data.code==1){
                     alert("回复成功!");
@@ -166,7 +168,7 @@ $(function() {
         });
 
     });
-
+/*
     //点赞
     $(".comment").on('click','.likes',function(){
         var $this=$(this),
@@ -181,7 +183,7 @@ $(function() {
         });
 
     })
-
+*/
 
 
 
